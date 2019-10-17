@@ -49,7 +49,7 @@ public class Database {
 			String query = "INSERT INTO `employee`(`id`, `ssn`, `fname`, `lname`, `email`) VALUES (" + "'" +id+"'" + "," + "'"+ssn+"'" + "," + "'"+fname+"'" + "," + "'"+lname+"'" + "," + "'"+email+"'" + ");";
 			execute(query);
 			JOptionPane.showMessageDialog(null, fname + " " + lname + " Succesfully Added");
-//			refresh();
+			refresh();
 		} catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -61,7 +61,7 @@ public class Database {
 			String query = "UPDATE `employee` SET `ssn`= '" + ssn + "', `fname`= '" + fname + "', `lname`= '" + lname + "', `email`= '" + email + "' WHERE fname = '" + fname + "';";
 			execute(query);
 			JOptionPane.showMessageDialog(null, fname + " " + lname + " Succesfully Updated");
-//			refresh();
+			refresh();
 		} catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -117,4 +117,10 @@ public class Database {
 		}
 		return usersList;
 	}
+
+	public void refresh() {
+		MainFrame window = new MainFrame();
+		window.frame.setVisible(false);
+		window.frame.setVisible(true);
+	} 
 }
