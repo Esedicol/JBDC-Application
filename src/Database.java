@@ -134,4 +134,120 @@ public class Database {
 		}
 		return true;
 	}
+
+
+	public boolean checkID(int id) {
+		Boolean b = null;
+		try {
+			Connection connection = getConnection();
+			Statement st;
+			ResultSet rs = null;
+			String q = "SELECT * FROM `Employee` WHERE id = '" + id + "'";
+
+			st = connection.createStatement();
+			rs = st.executeQuery(q);
+
+			if(rs.next()) {
+				return b = true;
+			}
+			else {
+				return b = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+
+	public boolean checkSSN(int ssn) {
+		Boolean b = null;
+		try {
+			Connection connection = getConnection();
+			Statement st;
+			ResultSet rs = null;
+			String q = "SELECT * FROM `Employee` WHERE ssn = '" + ssn + "'";
+
+			st = connection.createStatement();
+			rs = st.executeQuery(q);
+
+			if(rs.next()) {
+				return b = true;
+			}
+			else {
+				return b = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+
+	public boolean checkFName(String fname) {
+		Boolean b = null;
+		try {
+			Connection connection = getConnection();
+			Statement st;
+			ResultSet rs = null;
+			String q = "SELECT * FROM `Employee` WHERE fname = '" + fname + "'";
+
+			st = connection.createStatement();
+			rs = st.executeQuery(q);
+
+			if(rs.next()) {
+				return b = true;
+			}
+			else {
+				return b = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+
+	public boolean checkLName(String lname) {
+		Boolean b = null;
+		try {
+			Connection connection = getConnection();
+			Statement st;
+			ResultSet rs = null;
+			String q = "SELECT * FROM `Employee` WHERE lname = '" + lname + "'";
+
+			st = connection.createStatement();
+			rs = st.executeQuery(q);
+
+			if(rs.next()) {
+				return b = true;
+			}
+			else {
+				return b = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+
+	public boolean checkEmail(String email) {
+		Boolean b = null;
+		try {
+			Connection connection = getConnection();
+			Statement st;
+			ResultSet rs = null;
+			String q = "SELECT * FROM `Employee` WHERE email = '" + email + "'";
+
+			st = connection.createStatement();
+			rs = st.executeQuery(q);
+
+			if(rs.next()) {
+				return b = true;
+			}
+			else {
+				return b = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
 }
