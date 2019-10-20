@@ -14,6 +14,8 @@ public class MainFrame extends JPanel{
 	private JTextField txtEmail;
 	private JTextField txtId;
 
+	Database db = new Database();
+
 
 	// Launch the application //
 	public static void main(String[] args) {
@@ -38,6 +40,7 @@ public class MainFrame extends JPanel{
 	 */
 	public MainFrame() {
 		initialize();
+		ArrayList<User> employees = db.getUsersList();
 	}
 
 	// Initialize the contents of the frame //
