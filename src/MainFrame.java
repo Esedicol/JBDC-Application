@@ -50,5 +50,23 @@ public class MainFrame extends JPanel{
 		frame.setBounds(100, 100, 500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+
+
+				// ***************** Labels ***************** //
+		JLabel lblSsn = new JLabel("SSN");
+		lblSsn.setBounds(30, 40, 80, 40);
+		frame.getContentPane().add(lblSsn);
+
+		JLabel lblFirstName = new JLabel("First Name");
+		lblFirstName.setBounds(30, 80, 80, 40);
+		frame.getContentPane().add(lblFirstName);
+
+		JLabel lblLastName = new JLabel("Last Name");
+		lblLastName.setBounds(30, 120, 80, 40);
+		frame.getContentPane().add(lblLastName);
+
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setBounds(30, 160, 80, 40);
+		frame.getContentPane().add(lblEmail);
 	}
 }
