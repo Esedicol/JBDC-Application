@@ -1,6 +1,20 @@
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -138,4 +152,30 @@ public class MainFrame extends JPanel{
 		btnSearch.setBounds(255, 166, 160, 30);
 		frame.getContentPane().add(btnSearch);
 	}
+
+
+			// ***************** Text Fields ***************** //
+	txtSsn = new JTextField();
+	txtSsn.setBounds(120, 40, 130, 40);
+	frame.getContentPane().add(txtSsn);
+	txtSsn.setColumns(10);
+
+	txtFirstName = new JTextField();
+	txtFirstName.setBounds(120, 80, 130, 40);
+	frame.getContentPane().add(txtFirstName);
+	txtFirstName.setColumns(10);
+
+	txtLastName = new JTextField();
+	txtLastName.setBounds(120, 120, 130, 40);
+	frame.getContentPane().add(txtLastName);
+	txtLastName.setColumns(10);
+
+	txtEmail = new JTextField();
+	txtEmail.setBounds(120, 160, 130, 40);
+	frame.getContentPane().add(txtEmail);
+	txtEmail.setColumns(10);
+
+	txtId = new JTextField();
+	txtId.setBounds(423, 170, 57, 20);
+	frame.getContentPane().add(txtId);
 }
