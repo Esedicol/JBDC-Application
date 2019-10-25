@@ -178,8 +178,12 @@ public class MainFrame extends JPanel{
 		JButton btnClear = new JButton("CLEAR");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				txtSsn.setText("");
+				txtFirstName.setText("");
+				txtLastName.setText("");
+				txtEmail.setText("");
 			}
-		}
+		});
 		btnClear.setBounds(360, 210, 100, 50);
 		frame.getContentPane().add(btnClear);
 
