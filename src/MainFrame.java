@@ -89,8 +89,28 @@ public class MainFrame extends JPanel{
 		JButton btnAdd = new JButton("ADD");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int id = size + 1;
+				String ssn = txtSsn.getText().strip();
+				String fname = txtFirstName.getText().strip();
+				String lname = txtLastName.getText().strip();
+				String email = txtEmail.getText().strip();
+
+
+				if(ssn.equals("") || fname.equals("") || lname.equals("") || email.equals("")) {
+					JOptionPane.showMessageDialog(null,"Empty Inputs");
+					db.refresh();
+				}
+
+				else if (db.checkSSN(Integer.parseInt(ssn)) == true || db.checkEmail(email) == true) {
+					JOptionPane.showMessageDialog(null,"Dup Inputs");
+					db.refresh();
+				}
+
+				else {
+					db.add(id, Integer.parseInt(ssn), fname, lname, email);
+				}
 			}
-		}
+		});
 		btnAdd.setBounds(30, 210, 100, 50);
 		frame.getContentPane().add(btnAdd);
 
