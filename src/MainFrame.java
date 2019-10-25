@@ -118,8 +118,26 @@ public class MainFrame extends JPanel{
 		JButton btnUpdate = new JButton("UPDATE");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String ssn = txtSsn.getText().strip();
+				String fname = txtFirstName.getText().strip();
+				String lname = txtLastName.getText().strip();
+				String email = txtEmail.getText().strip();
+
+				if(ssn.equals("") || fname.equals("") || lname.equals("") || email.equals("")) {
+					JOptionPane.showMessageDialog(null,"Empty Inputs");
+					db.refresh();
+				}
+
+				else if (db.checkSSN(Integer.parseInt(ssn)) == true || db.checkEmail(email) == true) {
+					JOptionPane.showMessageDialog(null,"SSN or Email already exist.");
+					db.refresh();
+				}
+				else {
+					db.update(Integer.parseInt(ssn), fname, lname, email);
+					db.refresh();
+				}
 			}
-		}
+		});
 		btnUpdate.setBounds(140, 210, 100, 50);
 		frame.getContentPane().add(btnUpdate);
 
