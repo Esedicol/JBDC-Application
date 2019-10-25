@@ -20,6 +20,11 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JPanel{
+	Database db = new Database();
+
+	Connection conn;
+	Statement st;
+	ResultSet rs;
 
 	public JFrame frame;
 	private JTextField txtSsn;
@@ -27,8 +32,12 @@ public class MainFrame extends JPanel{
 	private JTextField txtLastName;
 	private JTextField txtEmail;
 	private JTextField txtId;
+	JList<Object> list;
+	DefaultListModel<Object> model;
+	int size = initialize();
 
-	Database db = new Database();
+	ArrayList<User> employees;
+
 
 
 	// Launch the application //
@@ -53,18 +62,17 @@ public class MainFrame extends JPanel{
 	 * Create the application.
 	 */
 	public MainFrame() {
-		initialize();
 		ArrayList<User> employees = db.getUsersList();
+		initialize();
 	}
 
 	// Initialize the contents of the frame //
-	public void initialize() {
+	public int initialize() {
 
 		frame =  new JFrame("MySQL CRUD");
 		frame.setBounds(100, 100, 500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
 
 		// ***************** Labels ***************** //
 		JLabel lblSsn = new JLabel("SSN");
@@ -85,7 +93,6 @@ public class MainFrame extends JPanel{
 
 
 		// ***************** Buttons ***************** //
-
 		JButton btnAdd = new JButton("ADD");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,7 +106,8 @@ public class MainFrame extends JPanel{
 				if(ssn.equals("") || fname.equals("") || lname.equals("") || email.equals("")) {
 					JOptionPane.showMessageDialog(null,"Empty Inputs");
 					db.refresh();
-				}
+				} 
+				
 				else if (db.isNumeric(ssn) == false) {
 					JOptionPane.showMessageDialog(null,"Invalid SSN: Please Enter a Digit");
 					db.refresh();
@@ -110,8 +118,8 @@ public class MainFrame extends JPanel{
 						db.refresh();
 					}
 
-					else if (db.isNumeric(fname) == true || db.isNumeric(lname) == true || db.isNumeric(email) == true){
-						JOptionPane.showMessageDialog(null,"Inputs contain a numeric value");
+					else if (db.isNumeric(fname) == true || db.isNumeric(lname) == true || db.isNumeric(email) == true || db.validEmail(email) == false){
+						JOptionPane.showMessageDialog(null,"Inputs contain a numeric value or Email format is invalid");
 						db.refresh();
 					}
 					else {
@@ -122,7 +130,6 @@ public class MainFrame extends JPanel{
 		});
 		btnAdd.setBounds(30, 210, 100, 50);
 		frame.getContentPane().add(btnAdd);
-
 
 		JButton btnUpdate = new JButton("UPDATE");
 		btnUpdate.addActionListener(new ActionListener() {
@@ -137,10 +144,10 @@ public class MainFrame extends JPanel{
 					db.refresh();
 				}
 
-				else if (db.checkSSN(Integer.parseInt(ssn)) == true || db.checkEmail(email) == true) {
-					JOptionPane.showMessageDialog(null,"SSN or Email already exist.");
-					db.refresh();
-				}
+//				else if (db.checkSSN(Integer.parseInt(ssn)) == true || db.checkEmail(email) == true) {
+//					JOptionPane.showMessageDialog(null,"SSN or Email already exist.");
+//					db.refresh();
+//				}
 				else {
 					db.update(Integer.parseInt(ssn), fname, lname, email);
 					db.refresh();
@@ -228,31 +235,72 @@ public class MainFrame extends JPanel{
 		});
 		btnSearch.setBounds(255, 166, 160, 30);
 		frame.getContentPane().add(btnSearch);
+
+
+		// ***************** Text Fields ***************** //
+		txtSsn = new JTextField();
+		txtSsn.setBounds(120, 40, 130, 40);
+		frame.getContentPane().add(txtSsn);
+		txtSsn.setColumns(10);
+
+		txtFirstName = new JTextField();
+		txtFirstName.setBounds(120, 80, 130, 40);
+		frame.getContentPane().add(txtFirstName);
+		txtFirstName.setColumns(10);
+
+		txtLastName = new JTextField();
+		txtLastName.setBounds(120, 120, 130, 40);
+		frame.getContentPane().add(txtLastName);
+		txtLastName.setColumns(10);
+
+		txtEmail = new JTextField();
+		txtEmail.setBounds(120, 160, 130, 40);
+		frame.getContentPane().add(txtEmail);
+		txtEmail.setColumns(10);
+
+		txtId = new JTextField();
+		txtId.setBounds(423, 170, 57, 20);
+		frame.getContentPane().add(txtId);
+
+
+		// ***************** JList ***************** //
+		model = new DefaultListModel<Object>();
+		list = new JList<Object>(model);
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int i = list.getSelectedIndex();
+				User x = null;
+
+				x = db.search(i + 1);
+
+				txtSsn.setText(Integer.toString(x.getSSN()));
+				txtFirstName.setText(x.getfName());
+				txtLastName.setText(x.getlName());
+				txtEmail.setText(x.getEmail());
+			}
+		});
+
+		// Display Stuff DB on JList //
+		try {
+			conn = db.getConnection();
+			st = conn.createStatement();  
+			model.clear();
+
+			rs=st.executeQuery("select * from employee");
+
+			while (rs.next()) {
+				model.addElement("ID: "+ rs.getString("id") + "  :  " + rs.getString("fname") + " " + rs.getString("lname"));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,"Failed to Connect to Database","Error Connection", JOptionPane.WARNING_MESSAGE);
+			System.exit(0);
+		}
+		list.setBounds(260, 40, 220, 120);
+		frame.getContentPane().add(list);
+
+
+		int jListSize = list.getModel().getSize();
+		return jListSize;
 	}
-
-
-			// ***************** Text Fields ***************** //
-	txtSsn = new JTextField();
-	txtSsn.setBounds(120, 40, 130, 40);
-	frame.getContentPane().add(txtSsn);
-	txtSsn.setColumns(10);
-
-	txtFirstName = new JTextField();
-	txtFirstName.setBounds(120, 80, 130, 40);
-	frame.getContentPane().add(txtFirstName);
-	txtFirstName.setColumns(10);
-
-	txtLastName = new JTextField();
-	txtLastName.setBounds(120, 120, 130, 40);
-	frame.getContentPane().add(txtLastName);
-	txtLastName.setColumns(10);
-
-	txtEmail = new JTextField();
-	txtEmail.setBounds(120, 160, 130, 40);
-	frame.getContentPane().add(txtEmail);
-	txtEmail.setColumns(10);
-
-	txtId = new JTextField();
-	txtId.setBounds(423, 170, 57, 20);
-	frame.getContentPane().add(txtId);
 }

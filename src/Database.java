@@ -55,10 +55,21 @@ public class Database {
 		}
 	}
 
+	public int getId (int ssn) {
+		int id = 0;
+		for (User x : employees) {
+			if(x.getSSN() == ssn) {
+				id = x.getID();
+			}
+		}
+		return id;
+	}
+
 	// ************* SQL UPDATE ************** //
 	public void update(int ssn, String fname, String lname, String email) {
 		try{
-			String query = "UPDATE `employee` SET `ssn`= '" + ssn + "', `fname`= '" + fname + "', `lname`= '" + lname + "', `email`= '" + email + "' WHERE fname = '" + fname + "';";
+			int id = getId(ssn);
+			String query = "UPDATE `employee` SET `ssn`= '" + ssn + "', `fname`= '" + fname + "', `lname`= '" + lname + "', `email`= '" + email + "' WHERE `id` = " + id + ";";
 			execute(query);
 			JOptionPane.showMessageDialog(null, fname + " " + lname + " Succesfully Updated");
 			refresh();
@@ -249,7 +260,8 @@ public class Database {
 		return b;
 	}
 
-		public boolean validEmail (String email) {
+
+	public boolean validEmail (String email) {
 		String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		if (email.matches(regex)) {
 			return true;
@@ -258,4 +270,7 @@ public class Database {
 			return false;
 		}
 	}
+
+
+
 }
