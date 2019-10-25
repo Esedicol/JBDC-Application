@@ -100,14 +100,23 @@ public class MainFrame extends JPanel{
 					JOptionPane.showMessageDialog(null,"Empty Inputs");
 					db.refresh();
 				}
-
-				else if (db.checkSSN(Integer.parseInt(ssn)) == true || db.checkEmail(email) == true) {
-					JOptionPane.showMessageDialog(null,"Dup Inputs");
+				else if (db.isNumeric(ssn) == false) {
+					JOptionPane.showMessageDialog(null,"Invalid SSN: Please Enter a Digit");
 					db.refresh();
 				}
-
 				else {
-					db.add(id, Integer.parseInt(ssn), fname, lname, email);
+					if (db.checkSSN(Integer.parseInt(ssn)) == true || db.checkEmail(email) == true) {
+						JOptionPane.showMessageDialog(null,"Dup Inputs");
+						db.refresh();
+					}
+
+					else if (db.isNumeric(fname) == true || db.isNumeric(lname) == true || db.isNumeric(email) == true){
+						JOptionPane.showMessageDialog(null,"Inputs contain a numeric value");
+						db.refresh();
+					}
+					else {
+						db.add(id, Integer.parseInt(ssn), fname, lname, email);
+					}				
 				}
 			}
 		});

@@ -248,7 +248,14 @@ public class Database {
 		}
 		return b;
 	}
-	
-	
 
+		public boolean validEmail (String email) {
+		String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+		if (email.matches(regex)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
