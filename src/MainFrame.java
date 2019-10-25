@@ -141,11 +141,37 @@ public class MainFrame extends JPanel{
 		btnUpdate.setBounds(140, 210, 100, 50);
 		frame.getContentPane().add(btnUpdate);
 
-		JButton btnDelete = new JButton("Delete");
+		JButton btnDelete = new JButton("DELETE");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				String ssn = txtSsn.getText().strip();
+				String fname = txtFirstName.getText().strip();
+				String lname = txtLastName.getText().strip();
+				String email = txtEmail.getText().strip();
+
+				if(ssn.equals("") || fname.equals("") || lname.equals("") || email.equals("")) {
+					JOptionPane.showMessageDialog(null, "Empty Inputs" );
+					db.refresh();
+				}
+				else {
+					if (db.checkSSN(Integer.parseInt(ssn)) == false || db.checkFName(fname) == false || db.checkLName(lname) == false || db.checkEmail(email) == false) {
+						JOptionPane.showMessageDialog(null, "ERROR User not found" );
+						db.refresh();
+					}
+					else {
+						String query = "DELETE FROM `employee` WHERE ssn=" + ssn;
+						try {
+							db.execute(query);
+							JOptionPane.showMessageDialog(null, "Employee: " + txtFirstName.getText().trim() + " " + txtLastName.getText().trim() + " has been deleted Successfully ");
+							db.refresh();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
 			}
-		}
+		});
 		btnDelete.setBounds(250, 210, 100, 50);
 		frame.getContentPane().add(btnDelete);
 
