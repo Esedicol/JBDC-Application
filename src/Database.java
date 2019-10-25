@@ -124,7 +124,6 @@ public class Database {
 		window.frame.setVisible(true);
 	} 
 
-
 	public boolean isNumeric(String str) {
 
 		for (char c : str.toCharArray()) {
@@ -134,7 +133,6 @@ public class Database {
 		}
 		return true;
 	}
-
 
 	public boolean checkID(int id) {
 		Boolean b = null;
@@ -250,4 +248,7 @@ public class Database {
 		}
 		return b;
 	}
+	
+	
+
 }
