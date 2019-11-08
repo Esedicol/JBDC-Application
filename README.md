@@ -11,4 +11,5 @@ Once the app starts running a GUI will pop up which is created using JAVA Swing.
 - search button (searches through db by ID)
 - four buttons by the bottom of the application. (add, update, delete and clear)
 
+# UML Class Digram 
 ![UML Diagram](https://github.com/Esedicol/JBDC-Application/blob/master/UML.jpg)
