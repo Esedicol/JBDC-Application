@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+
+/* @author Emmanuel Sedicol */
 public class Database {
 	ArrayList<User> employees = getUsersList();
 
